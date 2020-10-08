@@ -16,7 +16,7 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public boolean update(Object t) throws SQLException {
+	public boolean update(int id) throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
 	}
