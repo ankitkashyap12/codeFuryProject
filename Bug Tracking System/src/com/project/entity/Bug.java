@@ -1,20 +1,22 @@
 package com.project.entity;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
-public class Bug implements Comparable<Bug>{
+public class Bug {
 	
 	private int bugId;
 	private int projectId;
-	private int assignedTo;					//User Id of Developer
+	private int assignedTo;					//User Id of Developer//By default value=0
 	private String bugTitle;
 	
 	private String bugDescription;
-	private Date openDate;	
-	private boolean markedForClosing;		//Data type Boolean
-	private Date closedOn;
-	private int closedBy;					//User Id of Manager
-	private String bugStatus;
+	private LocalDate openDate;	
+	private boolean markedForClosing;		//Data type Boolean// default false
+	
+	private LocalDate closedOn;				// in database default value 1990-01-01
+	private int closedBy;					//User Id of Manager//By default value=0
+	private String bugStatus;				//Default "created"
 	private String severityLevel;
 	
 	private int createdBy;					//User Id of Tester
@@ -26,16 +28,10 @@ public class Bug implements Comparable<Bug>{
 		// TODO Auto-generated constructor stub
 	}
 
-	
 
 
-
-
-
-
-
-	public Bug(int bugId, int projectId, int assignedTo, String bugTitle, String bugDescription, Date openDate,
-			boolean markedForClosing, Date closedOn, int closedBy, String bugStatus, String severityLevel,
+	public Bug(int bugId, int projectId, int assignedTo, String bugTitle, String bugDescription, LocalDate openDate,
+			boolean markedForClosing, LocalDate closedOn, int closedBy, String bugStatus, String severityLevel,
 			int createdBy) {
 		super();
 		this.bugId = bugId;
@@ -53,10 +49,19 @@ public class Bug implements Comparable<Bug>{
 	}
 
 
+	
+	
+	
 
-
-
-
+	public Bug(int projectId, String bugTitle, String bugDescription,String severityLevel,
+			int createdBy) {
+		super();
+		this.projectId = projectId;
+		this.bugTitle = bugTitle;
+		this.bugDescription = bugDescription;
+		this.severityLevel = severityLevel;
+		this.createdBy = createdBy;
+	}
 
 
 
@@ -66,21 +71,9 @@ public class Bug implements Comparable<Bug>{
 
 
 
-
-
-
-
-
-
 	public void setBugId(int bugId) {
 		this.bugId = bugId;
 	}
-
-
-
-
-
-
 
 
 
@@ -90,21 +83,9 @@ public class Bug implements Comparable<Bug>{
 
 
 
-
-
-
-
-
-
 	public void setProjectId(int projectId) {
 		this.projectId = projectId;
 	}
-
-
-
-
-
-
 
 
 
@@ -114,21 +95,9 @@ public class Bug implements Comparable<Bug>{
 
 
 
-
-
-
-
-
-
 	public void setAssignedTo(int assignedTo) {
 		this.assignedTo = assignedTo;
 	}
-
-
-
-
-
-
 
 
 
@@ -138,21 +107,9 @@ public class Bug implements Comparable<Bug>{
 
 
 
-
-
-
-
-
-
 	public void setBugTitle(String bugTitle) {
 		this.bugTitle = bugTitle;
 	}
-
-
-
-
-
-
 
 
 
@@ -162,45 +119,21 @@ public class Bug implements Comparable<Bug>{
 
 
 
-
-
-
-
-
-
 	public void setBugDescription(String bugDescription) {
 		this.bugDescription = bugDescription;
 	}
 
 
 
-
-
-
-
-
-
-	public Date getOpenDate() {
+	public LocalDate getOpenDate() {
 		return openDate;
 	}
 
 
 
-
-
-
-
-
-
-	public void setOpenDate(Date openDate) {
+	public void setOpenDate(LocalDate openDate) {
 		this.openDate = openDate;
 	}
-
-
-
-
-
-
 
 
 
@@ -210,45 +143,21 @@ public class Bug implements Comparable<Bug>{
 
 
 
-
-
-
-
-
-
 	public void setMarkedForClosing(boolean markedForClosing) {
 		this.markedForClosing = markedForClosing;
 	}
 
 
 
-
-
-
-
-
-
-	public Date getClosedOn() {
+	public LocalDate getClosedOn() {
 		return closedOn;
 	}
 
 
 
-
-
-
-
-
-
-	public void setClosedOn(Date closedOn) {
+	public void setClosedOn(LocalDate closedOn) {
 		this.closedOn = closedOn;
 	}
-
-
-
-
-
-
 
 
 
@@ -258,21 +167,9 @@ public class Bug implements Comparable<Bug>{
 
 
 
-
-
-
-
-
-
 	public void setClosedBy(int closedBy) {
 		this.closedBy = closedBy;
 	}
-
-
-
-
-
-
 
 
 
@@ -282,21 +179,9 @@ public class Bug implements Comparable<Bug>{
 
 
 
-
-
-
-
-
-
 	public void setBugStatus(String bugStatus) {
 		this.bugStatus = bugStatus;
 	}
-
-
-
-
-
-
 
 
 
@@ -306,21 +191,9 @@ public class Bug implements Comparable<Bug>{
 
 
 
-
-
-
-
-
-
 	public void setSeverityLevel(String severityLevel) {
 		this.severityLevel = severityLevel;
 	}
-
-
-
-
-
-
 
 
 
@@ -330,37 +203,9 @@ public class Bug implements Comparable<Bug>{
 
 
 
-
-
-
-
-
-
 	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
-
-
-
-
-
-
-
-
-
-	@Override
-	public String toString() {
-		return "Bug [bugId=" + bugId + ", projectId=" + projectId + ", assignedTo=" + assignedTo + ", bugTitle="
-				+ bugTitle + ", bugDescription=" + bugDescription + ", openDate=" + openDate + ", markedForClosing="
-				+ markedForClosing + ", closedOn=" + closedOn + ", closedBy=" + closedBy + ", bugStatus=" + bugStatus
-				+ ", severityLevel=" + severityLevel + ", createdBy=" + createdBy + "]";
-	}
-
-
-
-
-
-
 
 
 
@@ -382,12 +227,6 @@ public class Bug implements Comparable<Bug>{
 		result = prime * result + ((severityLevel == null) ? 0 : severityLevel.hashCode());
 		return result;
 	}
-
-
-
-
-
-
 
 
 
@@ -447,18 +286,16 @@ public class Bug implements Comparable<Bug>{
 
 
 
-
-
-
-
-
-
 	@Override
-	public int compareTo(Bug o) {			//Default Sorting for Severity Level
-		// TODO Auto-generated method stub
-		
-		return 0;
+	public String toString() {
+		return "Bug [bugId=" + bugId + ", projectId=" + projectId + ", assignedTo=" + assignedTo + ", bugTitle="
+				+ bugTitle + ", bugDescription=" + bugDescription + ", openDate=" + openDate + ", markedForClosing="
+				+ markedForClosing + ", closedOn=" + closedOn + ", closedBy=" + closedBy + ", bugStatus=" + bugStatus
+				+ ", severityLevel=" + severityLevel + ", createdBy=" + createdBy + "]";
 	}
+
+	
+
 	
 	
 	
