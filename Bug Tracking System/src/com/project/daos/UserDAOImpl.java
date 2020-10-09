@@ -24,19 +24,27 @@ public class UserDAOImpl implements UserDAO{
 	}
 	
 	@Override
+	
 	public boolean add(User entity) throws SQLException {
-		String sql="insert into UserTable values(?,?,?,?,?)";
+		String sql="insert into UserTable(userName,userEmail,userType) values(?,?,?)";
+		
+		// make sure that keys are userName,userEmail and userType exactly this way in JSOn file.
+		
 		PreparedStatement pstmt = null;
 		boolean isInserted = false;
 		
 		try
 		{
 			pstmt=this.derbyConnection.prepareStatement(sql);
-			pstmt.setLong(1,entity.getUserId());
-			pstmt.setString(2, entity.getUserName());
-			pstmt.setString(3, entity.getUserEmail());
-			pstmt.setString(4, entity.getUserType());
-			pstmt.setBoolean(5, false);
+//			pstmt.setLong(1,entity.getUserId());
+			
+			//only 3 attributes needed to be inserted userName,userEmail,userRole
+			
+			pstmt.setString(1, entity.getUserName());
+			pstmt.setString(2, entity.getUserEmail());
+			pstmt.setString(3, entity.getUserType());
+			
+//			pstmt.setBoolean(4, false);
 			if(pstmt.executeUpdate() == 1) {
 				isInserted = true;
 				this.userList.add(entity);
