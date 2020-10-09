@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import com.project.entity.Bug;
 
-public interface BugDAO<T> extends DAO<T> {
+public interface BugDAO extends DAO<Bug> {
 	
 	Collection<Bug> sortedByDate(); 	//Sort By StartDate using StartDateComparator
 
