@@ -1,5 +1,11 @@
 package com.project.entity;
 
+/**
+ * @author Madhura Satao
+ * @author Aishwarya Thakur
+ * 
+ */
+
 public class User {
 
 	private int userId;
