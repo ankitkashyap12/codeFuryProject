@@ -1,9 +1,11 @@
 package com.project.daos;
 
 import com.project.ifaces.*;
-
-import java.sql.*;
-import java.time.LocalDate;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -36,23 +38,23 @@ public class BugDAOImpl implements BugDAO {
 		// TODO Auto-generated method stub
 		
 		
-		String sqlQuery= "insert into bug(projectId,bugTitle,bugDescription,openDate,severityLevel,createdBy) values(?,?,?,?,?,?)";
+		String sqlQuery= "insert into bug values(?,?,?,?,?,?,?,?,?,?,?,?)";
 		
 		psmt= con.prepareStatement(sqlQuery);
 		
+		psmt.setInt(1, bug.getBugId());
+		psmt.setInt(2, bug.getProjectId());
+		psmt.setInt(3, bug.getAssignedTo());
 		
-		psmt.setInt(1, bug.getProjectId());
-		
-		
-		psmt.setString(2, bug.getBugTitle());
-		psmt.setString(3, bug.getBugDescription());
-		
-		Date openDate = Date.valueOf(LocalDate.now());
-		
-		psmt.setDate(4, openDate);
-		
-		psmt.setString(5, bug.getSeverityLevel());
-		psmt.setInt(6, bug.getCreatedBy());
+		psmt.setString(4, bug.getBugTitle());
+		psmt.setString(5, bug.getBugDescription());
+		psmt.setDate(6, bug.getOpenDate());
+		psmt.setBoolean(7, bug.isMarkedForClosing());
+		psmt.setDate(8, bug.getClosedOn());
+		psmt.setInt(9,bug.getClosedBy());
+		psmt.setString(10, bug.getBugStatus());
+		psmt.setString(11, bug.getSeverityLevel());
+		psmt.setInt(12, bug.getCreatedBy());
 		
 		int flag=psmt.executeUpdate();
 		
@@ -86,7 +88,7 @@ public class BugDAOImpl implements BugDAO {
 	}
 
 	@Override
-	public List<Bug> findList(int userId) throws SQLException {
+	public List<Bug> findList(int id) throws SQLException {
 		// TODO Auto-generated method stub
 		
 		bugList.clear();
@@ -97,7 +99,7 @@ public class BugDAOImpl implements BugDAO {
 		
 		psmt= con.prepareStatement(sqlQuery);
 		
-		psmt.setInt(1, userId);
+		psmt.setInt(1, id);
 		
 		ResultSet rs= psmt.executeQuery();
 		rs.next();
@@ -109,19 +111,14 @@ public class BugDAOImpl implements BugDAO {
 		
 		switch (userType.toLowerCase()) {
 		case "tester":
-						sqlQuery= "select * from bug where createdBy=? and bugStatus!='closed'";
+						sqlQuery= "select * from bug where createdBy=?";
 						
 						break;
 			
 		case "developer":
-				sqlQuery= "select * from bug where assignedTo=? and bugStatus!='closed'";
+				sqlQuery= "select * from bug where assignedTo=?";
 			
 				break;
-			
-		case "manager":
-				sqlQuery= "select * from bug where projectId in (select projectId from team where userId=?)";
-			
-				break;		
 
 		default:
 			break;
@@ -130,7 +127,7 @@ public class BugDAOImpl implements BugDAO {
 		
 		psmt= con.prepareStatement(sqlQuery);
 		
-		psmt.setInt(1, userId);
+		psmt.setInt(1, id);
 		rs= psmt.executeQuery();
 		
 		while(rs.next())
@@ -146,19 +143,9 @@ public class BugDAOImpl implements BugDAO {
 			
 			bug.setBugDescription(rs.getString(5));
 			
-			
-			Date openDate= rs.getDate(6);
-			LocalDate openLocalDate = openDate.toLocalDate();
-			bug.setOpenDate(openLocalDate);
-			
-			
+			bug.setOpenDate(rs.getDate(6));
 			bug.setMarkedForClosing(rs.getBoolean(7));
-			
-			
-			Date closedDate= rs.getDate(8);
-			LocalDate closedLocalDate = closedDate.toLocalDate();
-			bug.setClosedOn(closedLocalDate);
-			
+			bug.setClosedOn(rs.getDate(8));
 			bug.setClosedBy(rs.getInt(9));
 			
 			bug.setBugStatus(rs.getString(10));
@@ -174,22 +161,16 @@ public class BugDAOImpl implements BugDAO {
 		return bugList;
 	}
 
+	@Override
+	public boolean add(Object t) throws SQLException {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 	@Override
-	public boolean update(int bugId) throws SQLException {
+	public boolean update(Object t) throws SQLException {
 		// TODO Auto-generated method stub
-		
-		
-		String sqlQuery = "update bug set markedForClosing=true where bugId=?";
-		
-		psmt= con.prepareStatement(sqlQuery);
-		
-		psmt.setInt(1, bugId);
-		
-		int flag= psmt.executeUpdate();
-		
-		return flag==1?true:false;
-		
+		return false;
 	}
 
 	

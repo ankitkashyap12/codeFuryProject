@@ -10,11 +10,8 @@ public class ConnectionUtility {
 		
 		try
 		{
-			String derbyURL = "jdbc:derby:BugReport;";
+			String derbyURL = "jdbc:derby:BugReport;create=true";
 			
-			
-
-			//derby.language.sequence.preallocator=1;
 			Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
 			
 			derbyConnection = DriverManager.getConnection(derbyURL);
@@ -35,10 +32,7 @@ public class ConnectionUtility {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		finally {
-			
-			
-		}
+		
 		
 		
 		return derbyConnection;
