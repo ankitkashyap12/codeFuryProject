@@ -7,12 +7,22 @@ public class User {
 	private String userEmail;
 	private String userType;
 	private boolean isRegistered;
-	
+	/**
+	 * 
+	 */
 	public User() {
 		super();
+		
 	}
-	
-	public User(int userId, String userName, String userEmail, String userType, boolean isRegistered) {
+	/**
+	 * @param userId
+	 * @param userName
+	 * @param userEmail
+	 * @param userType
+	 * @param isRegistered
+	 */
+//	
+	public User(int userId,String userName, String userEmail, String userType, boolean isRegistered) {
 		super();
 		this.userId = userId;
 		this.userName = userName;
@@ -20,53 +30,66 @@ public class User {
 		this.userType = userType;
 		this.isRegistered = isRegistered;
 	}
-	
+	/**
+	 * @return the userId
+	 */
 	public int getUserId() {
 		return userId;
 	}
-	
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
-	
+	/**
+	 * @param userId the userId to set
+	 */
+//	public void setUserId(int userId) {
+//		this.userId = userId;
+//	}
+	/**
+	 * @return the userName
+	 */
 	public String getUserName() {
 		return userName;
 	}
-	
+	/**
+	 * @param userName the userName to set
+	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
+	/**
+	 * @return the userEmail
+	 */
 	public String getUserEmail() {
 		return userEmail;
 	}
-	
+	/**
+	 * @param userEmail the userEmail to set
+	 */
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-	
+	/**
+	 * @return the userType
+	 */
 	public String getUserType() {
 		return userType;
 	}
-	
+	/**
+	 * @param userType the userType to set
+	 */
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-	
+	/**
+	 * @return the isRegistered
+	 */
 	public boolean isRegistered() {
 		return isRegistered;
 	}
-	
+	/**
+	 * @param isRegistered the isRegistered to set
+	 */
 	public void setRegistered(boolean isRegistered) {
 		this.isRegistered = isRegistered;
 	}
-	
-	@Override
-	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", userEmail=" + userEmail + ", userType="
-				+ userType + ", isRegistered=" + isRegistered + "]";
-	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -78,7 +101,6 @@ public class User {
 		result = prime * result + ((userType == null) ? 0 : userType.hashCode());
 		return result;
 	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -109,5 +131,13 @@ public class User {
 			return false;
 		return true;
 	}
+	@Override
+	public String toString() {
+//		
+		return "User [userId=" + userId +", userName=" + userName + ", userEmail=" + userEmail + ", userType="
+				+ userType + ", isRegistered=" + isRegistered + "]";
+	}
+	
+	
 	
 }

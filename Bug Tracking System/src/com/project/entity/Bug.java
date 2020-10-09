@@ -25,7 +25,7 @@ public class Bug {
 	
 	public Bug() {
 		super();
-		// TODO Auto-generated constructor stub
+		
 	}
 
 

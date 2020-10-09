@@ -36,7 +36,7 @@ public class BugDAOImpl implements BugDAO {
 		// TODO Auto-generated method stub
 		
 		
-		String sqlQuery= "insert into bug(projectId,bugTitle,bugDescription,openDate,severityLevel,createdBy) values(?,?,?,?,?,?)";
+		String sqlQuery= "insert into bug(projectId,title,bugDescription,openDate,severityLevel,createdBy) values(?,?,?,?,?,?)";
 		
 		psmt= con.prepareStatement(sqlQuery);
 		

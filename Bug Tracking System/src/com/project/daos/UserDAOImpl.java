@@ -1,3 +1,12 @@
+
+
+/**
+ * @author@Aishwarya Thakur 
+ * 
+ * This is the service class for implementing userDAO interface's methods.
+ *
+ */
+
 package com.project.daos;
 
 
@@ -12,6 +21,7 @@ import com.project.entity.User;
 import com.project.ifaces.UserDAO;
 import com.project.utils.ConnectionUtility;
 
+
 public class UserDAOImpl implements UserDAO{
 
 	private List<User> userList;
@@ -24,19 +34,27 @@ public class UserDAOImpl implements UserDAO{
 	}
 	
 	@Override
+	
 	public boolean add(User entity) throws SQLException {
-		String sql="insert into UserTable values(?,?,?,?,?)";
+		String sql="insert into UserTable(userName,userEmail,userType) values(?,?,?)";
+		
+		// make sure that keys are userName,userEmail and userType exactly this way in JSOn file.
+		
 		PreparedStatement pstmt = null;
 		boolean isInserted = false;
 		
 		try
 		{
 			pstmt=this.derbyConnection.prepareStatement(sql);
-			pstmt.setLong(1,entity.getUserId());
-			pstmt.setString(2, entity.getUserName());
-			pstmt.setString(3, entity.getUserEmail());
-			pstmt.setString(4, entity.getUserType());
-			pstmt.setBoolean(5, false);
+//			pstmt.setLong(1,entity.getUserId());
+			
+			//only 3 attributes needed to be inserted userName,userEmail,userRole
+			
+			pstmt.setString(1, entity.getUserName());
+			pstmt.setString(2, entity.getUserEmail());
+			pstmt.setString(3, entity.getUserType());
+			
+//			pstmt.setBoolean(4, false);
 			if(pstmt.executeUpdate() == 1) {
 				isInserted = true;
 				this.userList.add(entity);
@@ -52,33 +70,34 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public List<User> findAll() throws SQLException {
-	
-		String sql="select * from UserTable";
-		PreparedStatement pstmt=null;
-		ResultSet result=null;
-		
-		try {
-			pstmt=this.derbyConnection.prepareStatement(sql);
-			result = pstmt.executeQuery();
-			
-			while(result.next())
-			{
-				int userId = result.getInt("userId");
-				String userName = result.getString("userName");
-				String userEmail = result.getString("userEmail");
-				String userType = result.getString("userType");
-				boolean isRegistered = result.getBoolean("isRegistered");
-				
-				userList.clear();
-				User user = new User(userId, userName, userEmail, userType, isRegistered);
-				userList.add(user);
-			}
-			pstmt.close();
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return userList;	
+//	
+//		String sql="select * from UserTable";
+//		PreparedStatement pstmt=null;
+//		ResultSet result=null;
+//		
+//		try {
+//			pstmt=this.derbyConnection.prepareStatement(sql);
+//			result = pstmt.executeQuery();
+//			
+//			while(result.next())
+//			{
+//				int userId = result.getInt("userId");
+//				String userName = result.getString("userName");
+//				String userEmail = result.getString("userEmail");
+//				String userType = result.getString("userType");
+//				boolean isRegistered = result.getBoolean("isRegistered");
+//				
+//				userList.clear();
+////				User user = new User(userId, userName, userEmail, userType, isRegistered);
+//				userList.add(user);
+//			}
+//			pstmt.close();
+//			
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return userList;
+		return null;
 	}
 
 	@Override
