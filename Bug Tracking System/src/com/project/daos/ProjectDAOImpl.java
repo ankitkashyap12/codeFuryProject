@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -32,19 +33,17 @@ public class ProjectDAOImpl implements ProjectDAO {
 	
 	public ProjectDAOImpl() {
 		super();
-		// TODO Auto-generated constructor stub
 		userList=new ArrayList<User>();
 		try {
 			con= ConnectionUtility.getDerbyConnection();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	// This Method is used to add a new project to the project table in the database
 	@Override
 	public boolean add(Object t) throws SQLException {
-		// TODO Auto-generated method stub
+		
 		Project project= (Project) t;
         String sqlQuery= "insert into project values(?,?,?,?,?)";
 		
@@ -53,7 +52,10 @@ public class ProjectDAOImpl implements ProjectDAO {
 		psmt.setInt(1, project.getProjectId());
 		psmt.setString(2, project.getProjectName());
 		psmt.setString(3, project.getProjectDescription());
-		psmt.setDate(4, new Date(project.getStartDate().getTime()));
+//		LocalDate localStartDate=project.getStartDate(); 
+		Date startDate=Date.valueOf(project.getStartDate()); //converting Localdate to sql date
+		psmt.setDate(4, startDate);
+//		psmt.setDate(4, new Date(project.getStartDate().getTime()));
 		psmt.setString(5,"in progress");
 		
 		int flag=psmt.executeUpdate();
@@ -69,7 +71,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 	@Override
 	public List findAll() throws SQLException {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

@@ -71,33 +71,33 @@ public class UserDAOImpl implements UserDAO{
 	@Override
 	public List<User> findAll() throws SQLException {
 //	
-//		String sql="select * from UserTable";
-//		PreparedStatement pstmt=null;
-//		ResultSet result=null;
-//		
-//		try {
-//			pstmt=this.derbyConnection.prepareStatement(sql);
-//			result = pstmt.executeQuery();
-//			
-//			while(result.next())
-//			{
-//				int userId = result.getInt("userId");
-//				String userName = result.getString("userName");
-//				String userEmail = result.getString("userEmail");
-//				String userType = result.getString("userType");
-//				boolean isRegistered = result.getBoolean("isRegistered");
-//				
-//				userList.clear();
-////				User user = new User(userId, userName, userEmail, userType, isRegistered);
-//				userList.add(user);
-//			}
-//			pstmt.close();
-//			
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return userList;
-		return null;
+		String sql="select * from UserTable";
+		PreparedStatement pstmt=null;
+		ResultSet result=null;
+		
+		try {
+			pstmt=this.derbyConnection.prepareStatement(sql);
+			result = pstmt.executeQuery();
+			
+			while(result.next())
+			{
+				int userId = result.getInt("userId");
+				String userName = result.getString("userName");
+				String userEmail = result.getString("userEmail");
+				String userType = result.getString("userType");
+				boolean isRegistered = result.getBoolean("isRegistered");
+				
+				userList.clear();
+				User user = new User(userId, userName, userEmail, userType, isRegistered);
+				userList.add(user);
+			}
+			pstmt.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userList;
+//		return null;
 	}
 
 	@Override

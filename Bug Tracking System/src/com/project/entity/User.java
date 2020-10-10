@@ -39,9 +39,9 @@ public class User {
 	/**
 	 * @param userId the userId to set
 	 */
-//	public void setUserId(int userId) {
-//		this.userId = userId;
-//	}
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
 	/**
 	 * @return the userName
 	 */
