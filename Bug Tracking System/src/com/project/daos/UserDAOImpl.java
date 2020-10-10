@@ -1,16 +1,5 @@
 package com.project.daos;
 
-/**
- * @author Madhura Satao
- * @author Aishwarya Thakur
- * 
- * User DAO Implementation
- * 
- * This service class performs the CRUD operation on the User Table along with the functionalities of checking if the user details
- * are already present in the database and confirms the registration of the user on first time registration.
- *  
- * 
- */
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,7 +25,7 @@ public class UserDAOImpl implements UserDAO{
 	
 	@Override
 	
-	public boolean add(User entity) throws SQLException {								//insert single user into table
+	public boolean add(User entity) throws SQLException {
 		String sql="insert into UserTable(userName,userEmail,userType) values(?,?,?)";
 		
 		// make sure that keys are userName,userEmail and userType exactly this way in JSOn file.
@@ -70,7 +59,7 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public List<User> findAll() throws SQLException {						//get list of users from table
+	public List<User> findAll() throws SQLException {
 	
 		String sql="select * from UserTable";
 		PreparedStatement pstmt=null;
@@ -101,7 +90,7 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public boolean exists(String userEmail, String userType) {					//check if user exists
+	public boolean exists(String userEmail, String userType) {
 		
 		String sql="select * from UserTable where userEmail = ? and userType = ?";
 		PreparedStatement pstmt=null;
@@ -126,7 +115,7 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public boolean registeredUserExists(String userEmail) {						//check if user is registered
+	public boolean registeredUserExists(String userEmail) {
 		
 		String sql="select isRegistered from UserTable where userEmail = ?";
 		PreparedStatement pstmt=null;
@@ -152,7 +141,7 @@ public class UserDAOImpl implements UserDAO{
 	}
 	
 	@Override
-	public boolean updateRegistrationStatus(String userEmail) {						//confirm registration
+	public boolean updateRegistrationStatus(String userEmail) {
 	
 		String sql="Update UserTable set isRegistered = ? where userEmail = ?";
 		PreparedStatement pstmt=null;
