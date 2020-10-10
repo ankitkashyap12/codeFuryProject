@@ -10,8 +10,8 @@ public class ConnectionUtility {
 		
 		try
 		{
-			//String derbyURL = "jdbc:derby:BugReport;";
-			String derbyURL = "jdbc:derby://localhost:1527/BugReport";
+			String derbyURL = "jdbc:derby:BugReport;";
+			
 			
 
 			//derby.language.sequence.preallocator=1;

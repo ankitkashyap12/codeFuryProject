@@ -16,18 +16,7 @@ import com.project.entity.RegisteredUser;
 
 
 /**
- *  @author Aishwarya Thakur
  * Servlet implementation class RegisterServlet
- * 
- * 
- * This module is used to check the eligibility of the user before registration. It verifies the basic requirements like - 
- * 		- The user details should be already present in the database
- * 		- The user should not have registered before
- * 		- The details entered by the user should match with the database record
- * 
- *  On successful registration it allows the user to create a password and stores it in the database in secured manner.
- *  
- * 
  */
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
@@ -63,9 +52,9 @@ public class RegisterServlet extends HttpServlet {
 		
 		RegisteredUserDAOImpl registeredUserDao = new RegisteredUserDAOImpl();
 				
-		if(userPassword.equals(cnfPassword))				// Password matching
+		if(userPassword.equals(cnfPassword))
 		{
-			if(userDao.exists(userEmail, userType))			//checks if user exists
+			if(userDao.exists(userEmail, userType))
 			{
 				String hashPassword = registeredUserDao.getHashPassword(userPassword);
 				
@@ -73,10 +62,10 @@ public class RegisterServlet extends HttpServlet {
 				
 				RegisteredUser user = new RegisteredUser(userEmail, hashPassword, defaultTime);
 				
-				if(!userDao.registeredUserExists(userEmail))		//checks if user exists
+				if(!userDao.registeredUserExists(userEmail))
 				{
 					if(registeredUserDao.add(user))
-					{	//Successful registration
+					{	
 						RequestDispatcher rd= request.getRequestDispatcher("Home.jsp");
 						rd.forward(request, response);
 					}

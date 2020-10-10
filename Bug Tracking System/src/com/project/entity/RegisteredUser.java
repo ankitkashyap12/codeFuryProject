@@ -1,11 +1,5 @@
 package com.project.entity;
 
-/**
- * @author Madhura Satao
- * @author Aishwarya Thakur
- * 
- */
-
 import java.time.LocalDateTime;
 
 public class RegisteredUser {
@@ -17,12 +11,7 @@ public class RegisteredUser {
 	public RegisteredUser() {
 		super();
 	}
-
-	public RegisteredUser(String userEmail, String userPassword) {
-		super();
-		this.userEmail = userEmail;
-		this.userPassword = userPassword;
-	}
+	
 	public RegisteredUser(String userEmail, String userPassword, LocalDateTime lastLogin) {
 		super();
 		this.userEmail = userEmail;
