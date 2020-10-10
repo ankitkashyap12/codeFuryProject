@@ -18,7 +18,7 @@ public interface Application {
 		BugDAOImpl dao= new BugDAOImpl();
 		
 		try {
-			//dao.add(bug);
+			dao.add(bug);
 			//dao.add(bug1);
 			
 			dao.update(900);
