@@ -1,5 +1,17 @@
 package com.project.daos;
 
+/**
+ * @author Madhura Satao
+ * @author Aishwarya Thakur
+ * 
+ * Registered User DAO Implementation
+ * 
+ * This service class performs the CRUD operation on the RegisteredUser Table along with the functionalities of verifying the user before 
+ * login and generating a hashed password for the user.
+ *  
+ * 
+ */
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
@@ -11,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.project.entity.RegisteredUser;
+import com.project.entity.User;
 import com.project.ifaces.RegisteredUserDAO;
 import com.project.utils.ConnectionUtility;
 
@@ -27,7 +40,7 @@ public class RegisteredUserDAOImpl implements RegisteredUserDAO{
 	}
 
 	@Override
-	public boolean add(RegisteredUser entity) {	
+	public boolean add(RegisteredUser entity) {				//add to registered user table
 		
 		int isInserted = 0;
 		boolean isUpdated = false;
@@ -73,7 +86,7 @@ public class RegisteredUserDAOImpl implements RegisteredUserDAO{
 	}
 
 	@Override
-	public List<RegisteredUser> findAll() {
+	public List<RegisteredUser> findAll() {								//get list of users
 		
 		String sql="select * from RegisteredUser";
 		PreparedStatement pstmt=null;
@@ -100,7 +113,7 @@ public class RegisteredUserDAOImpl implements RegisteredUserDAO{
 	}
 		
 	@Override
-	public String getHashPassword(String password) 
+	public String getHashPassword(String password) 							//generate hashcode for passwords
     { 
         try { 
   
@@ -113,6 +126,48 @@ public class RegisteredUserDAOImpl implements RegisteredUserDAO{
             throw new RuntimeException(e); 
         } 
     }
+	
+public User verifyUser(RegisteredUser entity) {				//authenticate user
+		
+		User user = new User();
+		String sql="select * from UserTable join RegisteredUser on UserTable.userEmail=RegisteredUser.userEmail where RegisteredUser.userEmail=?";
+		PreparedStatement pstmt=null;
+		ResultSet result=null;
+		
+		try {
+			pstmt = this.derbyConnection.prepareStatement(sql);
+			pstmt.setString(1,entity.getUserEmail());
+			result = pstmt.executeQuery();
+			
+			if(result.next()) {
+				String userPassword=result.getString("userPassword");
+				int userId = result.getInt("userId");
+				String userName = result.getString("userName");
+				String userType = result.getString("userType");
+				boolean isRegistered = result.getBoolean("isRegistered");
+				
+				String enteredPassword = this.getHashPassword(entity.getUserPassword());
+				
+				if(enteredPassword.equals(userPassword)) {
+
+					user.setUserId(userId);
+					user.setUserName(userName);
+					user.setUserEmail(entity.getUserEmail());
+					user.setUserType(userType);
+					user.setRegistered(isRegistered);
+					
+				}
+				else {
+					user = null;
+				}
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return user;
+	}
 
 	@Override
 	public List<RegisteredUser> findList(int id) throws SQLException {

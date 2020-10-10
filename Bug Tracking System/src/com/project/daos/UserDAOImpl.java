@@ -1,6 +1,18 @@
 package com.project.daos;
 
 
+/**
+ * @author Madhura Satao
+ * @author Aishwarya Thakur
+ * 
+ * User DAO Implementation
+ * 
+ * This service class performs the CRUD operation on the User Table along with the functionalities of checking if the user details
+ * are already present in the database and confirms the registration of the user on first time registration.
+ *  
+ * 
+ */
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +37,7 @@ public class UserDAOImpl implements UserDAO{
 	
 	@Override
 	
-	public boolean add(User entity) throws SQLException {
+	public boolean add(User entity) throws SQLException {								//insert single user into table
 		String sql="insert into UserTable(userName,userEmail,userType) values(?,?,?)";
 		
 		// make sure that keys are userName,userEmail and userType exactly this way in JSOn file.
@@ -59,7 +71,7 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public List<User> findAll() throws SQLException {
+	public List<User> findAll() throws SQLException {						//get list of users from table
 	
 		String sql="select * from UserTable";
 		PreparedStatement pstmt=null;
@@ -90,7 +102,7 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public boolean exists(String userEmail, String userType) {
+	public boolean exists(String userEmail, String userType) {						//check if user exists
 		
 		String sql="select * from UserTable where userEmail = ? and userType = ?";
 		PreparedStatement pstmt=null;
@@ -115,7 +127,7 @@ public class UserDAOImpl implements UserDAO{
 	}
 
 	@Override
-	public boolean registeredUserExists(String userEmail) {
+	public boolean registeredUserExists(String userEmail) {							//check if user is registered
 		
 		String sql="select isRegistered from UserTable where userEmail = ?";
 		PreparedStatement pstmt=null;
@@ -141,7 +153,7 @@ public class UserDAOImpl implements UserDAO{
 	}
 	
 	@Override
-	public boolean updateRegistrationStatus(String userEmail) {
+	public boolean updateRegistrationStatus(String userEmail) {						//confirm registration
 	
 		String sql="Update UserTable set isRegistered = ? where userEmail = ?";
 		PreparedStatement pstmt=null;
