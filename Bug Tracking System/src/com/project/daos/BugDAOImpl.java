@@ -103,9 +103,6 @@ public class BugDAOImpl implements BugDAO {
 		rs.next();
 		String userType= rs.getString(1);
 		
-		System.out.println("Type-----------------------------"+userType.toLowerCase());
-		
-		
 		
 		switch (userType.toLowerCase()) {
 		case "tester":
