@@ -1,5 +1,6 @@
 package com.project.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -8,27 +9,25 @@ public class Project {
 	private int projectId;
 	private String projectName;
 	private String projectDescription;
-	private Date startDate;
+	private LocalDate startDate;
 	private String projectStatus;
-	private List<User> teamMembers;		//Set Data Type
-	
 	
 	public Project() {
 		super();
+		
+		
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public Project(int projectId, String projectName, String projectDescription, Date startDate, String projectStatus,
-			List<User> teamMembers) {
+	public Project(int projectId, String projectName, String projectDescription, LocalDate startDate, String projectStatus) {
 		super();
 		this.projectId = projectId;
 		this.projectName = projectName;
 		this.projectDescription = projectDescription;
 		this.startDate = startDate;
 		this.projectStatus = projectStatus;
-		this.teamMembers = teamMembers;
-	}
+		}
 
 
 	public int getProjectId() {
@@ -61,13 +60,13 @@ public class Project {
 	}
 
 
-	public Date getStartDate() {
+	public LocalDate getStartDate() {
 		return startDate;
 	}
 
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setStartDate(LocalDate localDate) {
+		this.startDate = localDate;
 	}
 
 
@@ -81,21 +80,10 @@ public class Project {
 	}
 
 
-	public List<User> getTeamMembers() {
-		return teamMembers;
-	}
-
-
-	public void setTeamMembers(List<User> teamMembers) {
-		this.teamMembers = teamMembers;
-	}
-
-
 	@Override
 	public String toString() {
-		return "Projects [projectId=" + projectId + ", projectName=" + projectName + ", projectDescription="
-				+ projectDescription + ", startDate=" + startDate + ", projectStatus=" + projectStatus
-				+ ", teamMembers=" + teamMembers + "]";
+		return "Project [projectId=" + projectId + ", projectName=" + projectName + ", projectDescription="
+				+ projectDescription + ", startDate=" + startDate + ", projectStatus=" + projectStatus + "]";
 	}
 
 
@@ -108,7 +96,6 @@ public class Project {
 		result = prime * result + ((projectName == null) ? 0 : projectName.hashCode());
 		result = prime * result + ((projectStatus == null) ? 0 : projectStatus.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
-		result = prime * result + ((teamMembers == null) ? 0 : teamMembers.hashCode());
 		return result;
 	}
 
@@ -144,14 +131,11 @@ public class Project {
 				return false;
 		} else if (!startDate.equals(other.startDate))
 			return false;
-		if (teamMembers == null) {
-			if (other.teamMembers != null)
-				return false;
-		} else if (!teamMembers.equals(other.teamMembers))
-			return false;
 		return true;
 	}
+
 	
+
 	
 
 }

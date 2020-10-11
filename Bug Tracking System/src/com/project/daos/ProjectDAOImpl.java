@@ -28,12 +28,13 @@ public class ProjectDAOImpl implements ProjectDAO {
 	Connection con = null;
 	PreparedStatement psmt= null;
 	List<User> userList=null;
+	List<Project> projectList = null;
 	
 	
 	
 	public ProjectDAOImpl() {
 		super();
-		// TODO Auto-generated constructor stub
+		projectList = new ArrayList<Project>();
 		userList=new ArrayList<User>();
 		try {
 			con= ConnectionUtility.getDerbyConnection();
@@ -76,8 +77,31 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 	@Override
 	public List findList(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		projectList.clear();
+		String sql = "select * from Project where projectId IN (select projectId from Team where userId =?)";
+		PreparedStatement ps=null;
+		//List<Integer> projectIdList = null;
+	   // int projectId =0;
+		int result=0;
+		try {
+			ps = this.con.prepareStatement(sql);
+			ps.setInt(1,id);
+			
+			ResultSet resultset = ps.executeQuery();
+			projectList = getRecords(resultset);
+			
+			} catch (SQLException e) {
+			e.printStackTrace();
+		}finally
+		{
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return projectList;
 	}
 
 	@Override
@@ -182,4 +206,27 @@ public class ProjectDAOImpl implements ProjectDAO {
 			return userList;
 		}
 
+		public List<Project> getRecords(ResultSet result)
+		{
+			List<Project> projList=new ArrayList<>();
+			Project prj = null;
+			try {
+				while(result.next())
+				{
+				int projectId = result.getInt("projectId");
+				String projectName = result.getString("projectName");
+				String projectDesc = result.getString("projectDescription");
+				Date startDate = result.getDate("startDate");
+				String projectStatus = result.getString("projectStatus");
+				LocalDate date = startDate.toLocalDate();
+				
+				prj = new Project(projectId, projectName, projectDesc, date, projectStatus);
+				projList.add(prj);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return projList;
+		}
 }
