@@ -14,6 +14,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -53,7 +54,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		psmt.setInt(1, project.getProjectId());
 		psmt.setString(2, project.getProjectName());
 		psmt.setString(3, project.getProjectDescription());
-		psmt.setDate(4, new Date(project.getStartDate().getTime()));
+		psmt.setDate(4, Date.valueOf(project.getStartDate()));
 		psmt.setString(5,"in progress");
 		
 		int flag=psmt.executeUpdate();
@@ -133,6 +134,52 @@ public class ProjectDAOImpl implements ProjectDAO {
 			}
 			
 			return flag;
+		}
+		
+		// This Method is used to retrieve a list of all testers who are not assigned
+				// to any project or are assigned to less than 2 projects
+		public List<User> getUserTesterList(){
+			try {
+				ResultSet result=null;
+				String sql="select usertable.userid,usertable.username from usertable left join team on usertable.userid = team.userid group by usertable.userid,usertable.username,usertable.usertype having count(usertable.userid)<2 and usertable.usertype='Tester'";
+				psmt=con.prepareStatement(sql);		
+				result= psmt.executeQuery();
+				User user=null;
+				while(result.next()) {
+					user.setUserId(result.getInt("userId"));
+					user.setUserName(result.getString("userName"));
+//					user.setUserType(result.getString("userType"));
+					
+					this.userList.add(user);
+				
+			}} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return userList;
+		}
+		
+		// This Method is used to retrieve a list of all the developers who are not assigned
+				// to any project
+		public List<User> getDeveloperList(){
+			try {
+				ResultSet result=null;
+				String sql="SELECT userTable.userId,userTable.userName,userTable.userType FROM userTable LEFT JOIN team ON userTable.userId = team.userId WHERE team.userId IS NULL and usertable.usertype='Developer'";
+				psmt=con.prepareStatement(sql);		
+				result= psmt.executeQuery();
+				User user=null;
+				while(result.next()) {
+					user.setUserId(result.getInt("userId"));
+					user.setUserName(result.getString("userName"));
+	//				user.setUserType(result.getString("userType"));
+					
+					this.userList.add(user);
+				
+			}} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return userList;
 		}
 
 }
