@@ -17,11 +17,16 @@ import javax.servlet.http.HttpSession;
 import com.project.daos.BugDAOImpl;
 import com.project.daos.TeamDAOImpl;
 import com.project.entity.Bug;
+import com.project.entity.User;
 import com.project.ifaces.BugDAO;
 import com.project.ifaces.TeamDAO;
 
 /**
+ * @author Nehal Goyal
  * Servlet implementation class TesterServlet
+ * 
+ * 
+ * This servlet is used for performing all the functions of a tester such as adding a new bug as well as displaying all the bugs created by him
  */
 @WebServlet(urlPatterns = {"/tester/*"})
 public class TesterServlet extends HttpServlet {
@@ -32,7 +37,8 @@ public class TesterServlet extends HttpServlet {
 	List<Bug> bugList=null;
 	Bug bug;
 	HttpSession session;
-	
+	User user=null;
+	int testerId;
 	
 	private static final long serialVersionUID = 1L;
        
@@ -58,7 +64,7 @@ public class TesterServlet extends HttpServlet {
     	teamDAO= new TeamDAOImpl();
     	bugList= new ArrayList<Bug>();
     	bug= new Bug();
-    	
+    	user= new User();
     }
 
 
@@ -74,9 +80,20 @@ public class TesterServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		
-		session = request.getSession();
-		List<Integer> projectList= teamDAO.findProjectsForUser(102); 
+		
+		session= request.getSession();
+		user = (User)session.getAttribute("activeUser");
+		
+		testerId= user.getUserId();
+		
+		
+		
+		List<Integer> projectList= teamDAO.findProjectsForUser(testerId); 
 		session.setAttribute("projectList",projectList);
+		
+		
+		
+		
 		
 		
 		projectList.forEach(System.out::println);
@@ -163,7 +180,7 @@ public class TesterServlet extends HttpServlet {
 		
 		bugList.clear();
 		try {
-			bugList=bugDAO.findList(102);
+			bugList=bugDAO.findList(testerId);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

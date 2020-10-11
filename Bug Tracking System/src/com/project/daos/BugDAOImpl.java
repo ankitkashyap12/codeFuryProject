@@ -13,6 +13,15 @@ import com.project.entity.Bug;
 import com.project.utils.ConnectionUtility;
 
 
+/**
+ * @author Nehal Goyal
+ * 
+ * In this part of the code the actual logic of bug dao is implemented.
+ * 
+ * Body of methods add,findlist and update is added.
+ * 
+ *
+ */
 public class BugDAOImpl implements BugDAO {
 
 	Connection con = null;
