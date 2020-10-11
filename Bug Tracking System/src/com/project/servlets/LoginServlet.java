@@ -56,10 +56,11 @@ public class LoginServlet extends HttpServlet {
 		
 		RegisteredUser user = new RegisteredUser(email,password);
 		RegisteredUserDAOImpl registeredUserDao = new RegisteredUserDAOImpl();
-		
+		System.out.println("in servlet");
 		User verifiedUser = registeredUserDao.verifyUser(user);			//authenticate user 
 
 		if(verifiedUser!=null) {
+			System.out.println("User Verified");
 			HttpSession session= request.getSession();				//set session for user
 			session.setAttribute("activeUser", verifiedUser);
 			
@@ -77,6 +78,7 @@ public class LoginServlet extends HttpServlet {
 			}
 		}
 		else {
+			System.out.println("else wala");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/Login.jsp");			//redirect to login if authentication failed
 			dispatcher.forward(request, response);
 		}

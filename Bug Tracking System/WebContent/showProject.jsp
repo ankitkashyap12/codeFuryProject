@@ -11,8 +11,9 @@
 <h3>Project Details:</h3>
 <% List pList = (List) session.getAttribute("ProjectList");
  request.setAttribute("pList", pList);  %>
-<table>
- <tr>
+
+<table border=2 align=center width=800>
+ <tr height=50>
    <th>Project ID</th>
    <th>Project Name</th>
    <th>Project Description</th>
@@ -21,12 +22,16 @@
  </tr>
  <c:forEach items="${pList}" var="project">
    
-  <tr>
+  <tr height=50>
    <td><c:out value="${project.projectId}"/></td>
    <td><c:out value="${project.projectName}"/></td>
    <td><c:out value="${project.projectDescription}"/></td>
    <td><c:out value="${project.startDate}"/></td>
    <td><c:out value="${project.projectStatus}"/></td>
+    <td align=center style="border-right:hidden; border-top: hidden; border-bottom: hidden;"><form action="showBugs">
+          <input type=hidden value="${project.projectId}" name="projectId"/>
+          <input type="submit" class="btn btn-primary" value="Show Bugs">
+          </form></td>
  </tr>
  </c:forEach>
 </table>

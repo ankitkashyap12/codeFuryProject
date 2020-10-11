@@ -40,7 +40,7 @@ public class ProjectServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    ProjectDAO projectDao = new ProjectDAOImpl();
-		int id = 5;
+		int id = 101;
 		List<Project> projList=null;
 		try {
 			projList  = projectDao.findList(id);
