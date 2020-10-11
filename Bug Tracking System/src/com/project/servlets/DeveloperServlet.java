@@ -20,19 +20,28 @@ import javax.servlet.http.HttpSession;
 import com.project.daos.BugDAOImpl;
 import com.project.daos.TeamDAOImpl;
 import com.project.entity.Bug;
+import com.project.entity.User;
 import com.project.ifaces.BugDAO;
 import com.project.ifaces.TeamDAO;
 
 /**
+ * 
+ * @author Nehal Goyal
  * Servlet implementation class DeveloperServlet
+ * 
+ * 
+ * This servlet is used to perform all actions of a developer i.e displaying bug list to the developer as well as a developer can mark a bug
+ * for closing in the checkbox provided at frontend.
  */
 @WebServlet(urlPatterns = {"/developer/*"})
 public class DeveloperServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	BugDAO bugDAO= null;
+	User user=null;
 	List<Bug> bugList=null;
 	Bug bug;
 	HttpSession session;
+	int developerId;
 	
 	
 		@Override
@@ -42,6 +51,7 @@ public class DeveloperServlet extends HttpServlet {
 	    	bugDAO= new BugDAOImpl();
 	    	bugList= new ArrayList<Bug>();
 	    	bug= new Bug();
+	    	user= new User();
 	    		    	
 	    }
 
@@ -60,6 +70,12 @@ public class DeveloperServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		session= request.getSession();
+		user = (User)session.getAttribute("activeUser");
+		
+		developerId= user.getUserId();
+		
 		
 		
 		String action = request.getPathInfo();
@@ -143,6 +159,7 @@ public class DeveloperServlet extends HttpServlet {
 	
 	public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		session.invalidate();
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
 		
 		dispatcher.forward(request, response);
@@ -154,7 +171,7 @@ public class DeveloperServlet extends HttpServlet {
 		
 		bugList.clear();
 		try {
-			bugList=bugDAO.findList(101);
+			bugList=bugDAO.findList(developerId);
 			
 			Predicate<Bug> testPredicate= bug->(bug.isMarkedForClosing()==true);
 			

@@ -1,6 +1,7 @@
 package com.project.daos;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,17 @@ import java.util.List;
 import com.project.ifaces.TeamDAO;
 import com.project.utils.ConnectionUtility;
 
+
+
+
+
+
+/**
+ * @author Nehal Goyal
+ * 
+ * A method called findProjects is implemented for finding the list of projects assigned to a particular user.
+ *
+ */
 public class TeamDAOImpl implements TeamDAO {
 	
 	Connection con = null;
