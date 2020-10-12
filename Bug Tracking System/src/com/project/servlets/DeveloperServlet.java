@@ -42,6 +42,7 @@ public class DeveloperServlet extends HttpServlet {
 	Bug bug;
 	HttpSession session;
 	int developerId;
+	TeamDAO teamDAO=null;
 	
 	
 		@Override
@@ -52,6 +53,8 @@ public class DeveloperServlet extends HttpServlet {
 	    	bugList= new ArrayList<Bug>();
 	    	bug= new Bug();
 	    	user= new User();
+	    	teamDAO= new TeamDAOImpl(); 
+				
 	    		    	
 	    }
 
@@ -76,6 +79,12 @@ public class DeveloperServlet extends HttpServlet {
 		
 		developerId= user.getUserId();
 		
+		session.setAttribute("userName", user.getUserName());
+		session.setAttribute("userEmail", user.getUserEmail());
+		
+//		List<Integer> projectList= teamDAO.findProjectsForUser(developerId); 
+//		session.setAttribute("projectList",projectList);
+//		
 		
 		
 		String action = request.getPathInfo();
