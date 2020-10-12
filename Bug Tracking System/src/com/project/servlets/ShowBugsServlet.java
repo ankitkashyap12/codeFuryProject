@@ -38,8 +38,8 @@ public class ShowBugsServlet extends HttpServlet {
 	int checkId=0;
 	
 	User user=(User)session.getAttribute("activeUser");
-	String type=user.getUserType();			//Convert it into user.getType()
-	int id=user.getUserId();		//Uncomment it
+	//String type=user.getUserType();		//Convert it into user.getType()
+	int userId=user.getUserId();		//Uncomment it
     public ShowBugsServlet() {
         super();
         // TODO Auto-generated constructor stub
@@ -117,9 +117,6 @@ public class ShowBugsServlet extends HttpServlet {
 	
 	public void displayBug(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		
-		
-		if(type.equalsIgnoreCase("Manager")){
 			
 		try {
 			String projectId=request.getParameter("projectId");
@@ -145,17 +142,16 @@ public class ShowBugsServlet extends HttpServlet {
 			session.setAttribute("userList",userList);
 			request.getRequestDispatcher("/displaybugs.jsp").forward(request, response);
 		}
-		}
-		else {
-			
-			try {
-				bugList=service.findList(id);
-			} catch (NumberFormatException | SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
+//		else {
+//			
+//			try {
+//				bugList=service.findList(i);
+//			} catch (NumberFormatException | SQLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//			
+//		}
 		
 		
 	}
@@ -182,7 +178,7 @@ public class ShowBugsServlet extends HttpServlet {
 		System.out.println(bugId);
 		try {
 			//User user=(User)session.getAttribute("activeUser");
-			service.bugClosed(id,bugId);
+			service.bugClosed(userId,bugId);
 			displayBug(request, response);	
 		}
 		catch (SQLException e) {
