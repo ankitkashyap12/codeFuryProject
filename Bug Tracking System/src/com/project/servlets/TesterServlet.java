@@ -86,6 +86,9 @@ public class TesterServlet extends HttpServlet {
 		
 		testerId= user.getUserId();
 		
+		session.setAttribute("userName", user.getUserName());
+		session.setAttribute("userEmail", user.getUserEmail());
+		
 		
 		
 		List<Integer> projectList= teamDAO.findProjectsForUser(testerId); 
@@ -96,7 +99,7 @@ public class TesterServlet extends HttpServlet {
 		
 		
 		
-		projectList.forEach(System.out::println);
+		//projectList.forEach(System.out::println);
 		
 		
 		String action = request.getPathInfo();
@@ -167,10 +170,11 @@ public class TesterServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		
-		RequestDispatcher dispatcher = request.getRequestDispatcher("tester");
-	
-		dispatcher.forward(request, response);
+		finally
+		{
+			RequestDispatcher dispatcher = request.getRequestDispatcher("tester");
+			dispatcher.forward(request, response);
+		}
 		
 		
 	}
@@ -186,10 +190,18 @@ public class TesterServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		finally {
+	
 		request.setAttribute("listOfBugs", bugList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/testerPage.jsp");
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		dispatcher.forward(request, response);
-		
+		}
 		
 	}
 
