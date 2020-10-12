@@ -55,7 +55,7 @@ public class AddNewProjectServlet extends HttpServlet {
             List<User> tester = new ArrayList<User>();
 		    List<User> developer = new ArrayList<User>();
             List<User> userList = dao.getUserList();
-            request.setAttribute("userList", userList);
+            System.out.println(userList);
             for (User eachUser : userList) {
     			if(eachUser.getUserType().equalsIgnoreCase("tester")) {
     				tester.add(eachUser);
@@ -63,7 +63,7 @@ public class AddNewProjectServlet extends HttpServlet {
     				developer.add(eachUser);
     			}
     		}
-            
+            request.setAttribute("tester", tester);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/AddProject.jsp");
             dispatcher.forward(request, response);
 	}

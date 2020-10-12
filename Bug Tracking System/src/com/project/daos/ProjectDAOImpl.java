@@ -76,7 +76,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 	}
 
 	@Override
-	public List findList(int id) throws SQLException {
+	public List<Project> findList(int id) throws SQLException {
 		projectList.clear();
 		String sql = "select * from Project where projectId IN (select projectId from Team where userId =?)";
 		PreparedStatement ps=null;

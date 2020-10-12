@@ -10,6 +10,7 @@ import java.util.HashSet;
 import java.util.List;
 
 import com.project.entity.Bug;
+import com.project.entity.User;
 import com.project.utils.ConnectionUtility;
 
 
@@ -123,11 +124,7 @@ public class BugDAOImpl implements BugDAO {
 				sqlQuery= "select * from bug where assignedTo=? and bugStatus!='closed'";
 			
 				break;
-			
-		case "manager":
-				sqlQuery= "select * from bug where projectId in (select projectId from team where userId=?)";
-			
-				break;		
+				
 
 		default:
 			break;
@@ -179,6 +176,94 @@ public class BugDAOImpl implements BugDAO {
 		
 		return bugList;
 	}
+	
+	
+		public List<User> findUserForBugs(int projectId){
+		
+		List<User> userList=new ArrayList<User>();
+		ResultSet rs=null;
+		
+		String sql="select * from usertable where userid in(select userId from team where projectId=?) and usertable.usertype='Developer' ";
+		try {
+			psmt= con.prepareStatement(sql);
+			
+			psmt.setInt(1, projectId);
+			rs= psmt.executeQuery();
+			while(rs.next()) {
+				User user=new User();
+				user.setUserId(rs.getInt(1));
+				user.setUserName(rs.getString(2));
+				user.setUserEmail(rs.getString(3));
+				user.setUserType(rs.getString(4));
+				user.setRegistered(true);
+				
+				userList.add(user);
+				
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return userList;
+		
+		
+	}
+	
+	public List<Bug> findListForManager(int projectId) throws SQLException {
+		bugList.clear();
+		
+		String sqlQuery= "select * from bug where projectId=? and closedBy=0";
+		
+		psmt= con.prepareStatement(sqlQuery);
+		ResultSet rs=null;
+		psmt.setInt(1, projectId);
+		rs= psmt.executeQuery();
+		
+		while(rs.next())
+		{
+
+			Bug bug= new Bug();
+			
+			bug.setBugId(rs.getInt(1));
+			bug.setProjectId(rs.getInt(2));
+			bug.setAssignedTo(rs.getInt(3));
+			
+			bug.setBugTitle(rs.getString(4));
+			
+			bug.setBugDescription(rs.getString(5));
+			
+			
+			Date openDate= rs.getDate(6);
+			LocalDate openLocalDate = openDate.toLocalDate();
+			bug.setOpenDate(openLocalDate);
+			
+			
+			bug.setMarkedForClosing(rs.getBoolean(7));
+			
+			
+			Date closedDate= rs.getDate(8);
+			LocalDate closedLocalDate = closedDate.toLocalDate();
+			bug.setClosedOn(closedLocalDate);
+			
+			bug.setClosedBy(rs.getInt(9));
+			
+			bug.setBugStatus(rs.getString(10));
+			bug.setSeverityLevel(rs.getString(11));
+			bug.setCreatedBy(rs.getInt(12));
+			
+			
+			bugList.add(bug);
+			
+					
+		}
+		
+		
+	return bugList;	
+	
+	}
+	
 
 
 	@Override
@@ -197,6 +282,40 @@ public class BugDAOImpl implements BugDAO {
 		return flag==1?true:false;
 		
 	}
+	
+	public boolean assignDeveloper(int userId,int bugId) throws SQLException {
+		// TODO Auto-generated method stub
+		
+		
+		String sqlQuery = "update bug set assignedTo=?, bugStatus='In Progress' where bugId=?";
+		
+		psmt= con.prepareStatement(sqlQuery);
+		
+		psmt.setInt(1, userId);
+		
+		psmt.setInt(2, bugId);
+		
+		int flag= psmt.executeUpdate();
+		
+		return flag==1?true:false;
+		
+	}
+	
+	public boolean bugClosed(int userId,int bugId) throws SQLException{
+		
+		String sqlQuery = "update bug set closedBy=?, bugStatus='Closed' where bugId=?";
+		
+		psmt= con.prepareStatement(sqlQuery);
+		
+		psmt.setInt(1, userId);
+		
+		psmt.setInt(2, bugId);
+		
+		int flag= psmt.executeUpdate();
+		
+		return flag==1?true:false;
+	}
+
 
 	
 
