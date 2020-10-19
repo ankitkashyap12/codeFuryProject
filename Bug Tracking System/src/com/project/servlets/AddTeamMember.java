@@ -84,6 +84,7 @@ public class AddTeamMember extends HttpServlet {
 		int developer=Integer.parseInt(request.getParameter("developer"));
 //		System.out.println("tester"+tester);
 		System.out.println("developer"+request.getParameterValues("developer"));
+		System.out.println("project id in add team "+project.getProjectId());
 		dao.assignToProject(request.getParameterValues("developer"), project.getProjectId());
 		
 //		String projectName=dao.findById(projectId).getProjectName(); 

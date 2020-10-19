@@ -53,15 +53,15 @@ public class ProjectDAOImpl implements ProjectDAO {
 	public boolean add(Object t) throws SQLException {
 		// TODO Auto-generated method stub
 		Project project= (Project) t;
-        String sqlQuery= "insert into project values(?,?,?,?,?)";
+        String sqlQuery= "insert into project(projectName,projectDescription,startDate,projectStatus) values(?,?,?,?)";
 		
 		psmt= con.prepareStatement(sqlQuery);
 		
-		psmt.setInt(1, project.getProjectId());
-		psmt.setString(2, project.getProjectName());
-		psmt.setString(3, project.getProjectDescription());
-		psmt.setDate(4, Date.valueOf(project.getStartDate()));
-		psmt.setString(5,"in progress");
+//		psmt.setInt(1, project.getProjectId());
+		psmt.setString(1, project.getProjectName());
+		psmt.setString(2, project.getProjectDescription());
+		psmt.setDate(3, Date.valueOf(project.getStartDate()));
+		psmt.setString(4,"in progress");
 		
 		int flag=psmt.executeUpdate();
 		
@@ -111,8 +111,40 @@ public class ProjectDAOImpl implements ProjectDAO {
 
 	@Override
 	public Object findById(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "select * from Project where projectId=?";
+		PreparedStatement ps=null;
+		Project project=null;
+		
+		try {
+			ps = this.con.prepareStatement(sql);
+			ps.setInt(1,id);
+			
+			ResultSet result = ps.executeQuery();
+			while(result.next())
+			{
+			int projectId = result.getInt("projectId");
+			String projectName = result.getString("projectName");
+			String projectDesc = result.getString("projectDescription");
+			Date startDate = result.getDate("startDate");
+			String projectStatus = result.getString("projectStatus");
+			LocalDate date = startDate.toLocalDate();
+			
+			project = new Project(projectId, projectName, projectDesc, date, projectStatus);		
+			} 
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally
+		{
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return project;
+
+		
 	}
 
 	@Override
@@ -262,7 +294,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 					this.testerList.clear();
 					try {
 						ResultSet result=null;
-						String sql="select usertable.userid,usertable.username from usertable left join team on usertable.userid = team.userid group by usertable.userid,usertable.username,usertable.usertype having count(usertable.userid)<2 and usertable.usertype='Tester'";
+						String sql="select usertable.userid,usertable.username from usertable left join team on usertable.userid = team.userid group by usertable.userid,usertable.username,usertable.usertype having count(usertable.userid)<2 and usertable.usertype='Tester' and userTable.isRegistered='true'";
 						psmt=con.prepareStatement(sql);		
 						result= psmt.executeQuery();
 //						User user=new User();
@@ -288,7 +320,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 					this.developerList.clear();
 					try {
 						ResultSet result=null;
-						String sql="SELECT userTable.userId,userTable.userName,userTable.userType FROM userTable LEFT JOIN team ON userTable.userId = team.userId WHERE team.userId IS NULL and usertable.usertype='Developer'";
+						String sql="SELECT userTable.userId,userTable.userName,userTable.userType FROM userTable LEFT JOIN team ON userTable.userId = team.userId WHERE team.userId IS NULL and usertable.usertype='Developer' and userTable.isRegistered='true'";
 						psmt=con.prepareStatement(sql);		
 						result= psmt.executeQuery();
 						

@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,9 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Project Page</title>
     <link rel="stylesheet" href="styles/css/bootstrap.min.css">
-    <script src="styles/js/jquery-3.5.1.js"></script>
-    <script src="styles/js/bootstrap.min.js" ></script></head>
+    </head>
 <body>
+
+    <script src="styles/js/jquery-3.5.1.js"></script>
+    <script src="styles/js/bootstrap.min.js" ></script>
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Add New Project Page</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,7 +26,7 @@
             <div style="width: 100%; display: flex; justify-content: center;">
                 <h2>Add New Project</h2>
             </div>
-        <form method="post">
+        <form method="post" action='add'>
             <div class="form-group">
               <input  class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Project name" type="text" placeholder="Enter Name" name="projectName">
             </div>

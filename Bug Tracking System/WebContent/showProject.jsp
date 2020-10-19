@@ -9,10 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bug Tracking System</title>
     <link rel="stylesheet" href="styles/css/bootstrap.min.css">
-    <script src="styles/js/jquery-3.5.1.js"></script>
-    <script src="styles/js/bootstrap.min.js" ></script>    
+       
 </head>
 <body style="overflow-y: hidden;">
+<script src="styles/js/jquery-3.5.1.js"></script>
+    <script src="styles/js/bootstrap.min.js" ></script> 
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Bug Tracking System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +62,7 @@
   					  <td>${Date}</td>
   					  <td>${Status}</td>
     				  <td align=center style="border-right:hidden; border-top: hidden; border-bottom: hidden;">
-          			  <form action="showBugs">
+          			  <form action="<%=request.getContextPath()%>/showBugs">
           			  <input type=hidden value="${Id}" name="projectId"/>
          			  <input type="submit" class="btn btn-primary" value="Show Bugs">
           			  </form></td>

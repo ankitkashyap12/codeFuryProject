@@ -58,12 +58,15 @@ public class UserServlet extends HttpServlet {
 		System.out.println(timeStamp);
 		if(session != null)
 		{
+			session.setAttribute("activeUser", user);
+			session.setAttribute("userName", user.getUserName());
+
 			session.setAttribute("userEmail",user.getUserEmail());
 			session.setAttribute("userType",user.getUserType());
 			session.setAttribute("timeStamp", timeStamp);
 		}
 		System.out.println("let's see details on webpage..."+user.getUserEmail()+" ,"+user.getUserType()+" ,"+timeStamp);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("/mainpageForManager.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/managerPage.jsp");
         dispatcher.forward(request, response);
 	}
 

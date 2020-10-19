@@ -9,10 +9,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manager Page</title>
     <link rel="stylesheet" href="styles/css/bootstrap.min.css">
-    <script src="styles/js/jquery-3.5.1.js"></script>
-    <script src="styles/js/bootstrap.min.js" ></script>
+    
 </head>
 <body>
+<script src="styles/js/jquery-3.5.1.js"></script>
+    <script src="styles/js/bootstrap.min.js" ></script>
     <nav class="navbar navbar-dark bg-dark">
         <a class="navbar-brand" href="#">Bug Tracking System</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,7 +41,7 @@
                       <ol >
                        <c:forEach items="${ProjectList}" var="ProjectName">
 
-               				 <li ><form action="ProjectServlet/projectDetails">
+               				 <li ><form action="<%=request.getContextPath()%>/ProjectServlet/projectDetails">
        						 <input type=hidden value="${ProjectName.projectId}" name="projectId"/>
           					 <input type="submit" class="btn btn-secondary btn-lg" style="margin: 2%; margin-bottom: 0%; height: 50px;" value="${ProjectName.projectName}">
          					 </form></li>

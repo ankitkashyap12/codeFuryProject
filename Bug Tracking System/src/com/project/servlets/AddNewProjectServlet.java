@@ -100,7 +100,7 @@ public class AddNewProjectServlet extends HttpServlet {
 			dao.add(project);
 //			dao.assignTo(Integer.parseInt(request.getParameter("tester")), 101);
 //			dao.assignManagerToProject( user.getUserId(), project.getProjectName());
-			dao.assignManagerToProject( 203, project.getProjectName());
+			dao.assignManagerToProject( user.getUserId(), project.getProjectName());
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
